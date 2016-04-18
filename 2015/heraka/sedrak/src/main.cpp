@@ -25,5 +25,8 @@ int main()
 	x = quasi_newton(f, range_begin, range_end, x0, epsilon);
 	std::cout << "X = " << x << std::endl;
 
+	x = quasi_newton_mixed(f, range_begin, range_end, x0, epsilon);
+	std::cout << "X = " << x << std::endl;
+
 	return 0;
 }

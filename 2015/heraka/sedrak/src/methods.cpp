@@ -218,3 +218,54 @@ double quasi_newton_v2(function f, double begin, double end, double x0, double e
 
 	return xk1;
 }
+
+double quasi_newton_mixed(function f, double begin, double end, double x0, double epsilon)
+{
+	std::cout << "Quasi Newton Mixed: [" << begin << ", " << end << "], x0 = " << x0 << ", epsilon = " << epsilon << std::endl;
+
+	double fa = f(begin);
+	double f_shtr2a = f_shtr2(begin);
+
+	double fb = f(end);
+	double f_shtr2b = f_shtr2(end);
+
+	if (fa*f_shtr2a>0)
+		return quasi_newton_mixed_v1(f, begin, end, begin, end, epsilon);
+
+	if (fb*f_shtr2b>0)
+		return quasi_newton_mixed_v2(f, begin, end, begin, end, epsilon);
+}
+
+double quasi_newton_mixed_v1(function f, double begin, double end, double x0, double x00, double epsilon)
+{
+	std::cout << "Quasi Newton Mixed v1: [" << begin << ", " << end << "], x0 = " << x0 << ", x00 = " << x00<< ", epsilon = " << epsilon << std::endl;
+	return newton(f, begin, end, x0, epsilon);
+}
+
+double quasi_newton_mixed_v2(function f, double begin, double end, double x0, double x00, double epsilon)
+{
+	std::cout << "Quasi Newton Mixed v2: [" << begin << ", " << end << "], x0 = " << x0 << ", x00 = " << x00<< ", epsilon = " << epsilon << std::endl;
+
+	double xk = x0;
+	double xk1 = xk;
+	double xksh = x00;
+	double xk1sh = xksh;
+	double delta = 0;
+	int k = 0;
+	printf("%2s%10s%10s\n", "k", "xk", "f(xk)");
+	do
+	{
+		xk = xk1;
+		xksh = xk1sh;
+		double fxk = f(xk);
+		double fxksh = f(xksh);
+		printf("%-2d%10.6f%10.6f\n", k, xk, fxk);
+		xk1 = xk - (fxk*(xksh-xk))/(fxksh-fxk);
+		xk1sh = xksh - fxksh/f_shtr(xk);
+		delta = fabs(xk1-xk);
+		++k;
+	} while (delta > epsilon);
+
+	printf("%-2d%10.6f%10.6f\n", k, xk1, f(xk1));
+	return xk1;
+}

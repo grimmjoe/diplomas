@@ -93,4 +93,34 @@ double quasi_newton_v1(function f, double begin, double end, double x0, double e
  */
 double quasi_newton_v2(function f, double begin, double end, double x0, double epsilon);
 
+/*!
+ * Apply quasi Newton's mixed method
+ * @param f The function
+ * @param begin the range begin
+ * @param end the range end
+ * @param x0 The start of the iteration
+ * @param epsilon The accuracy
+ */
+double quasi_newton_mixed(function f, double begin, double end, double x0, double epsilon);
+
+/*!
+ * Apply quasi Newton's mixed method v1
+ * @param f The function
+ * @param begin the range begin
+ * @param end the range end
+ * @param x0 The start of the iteration
+ * @param epsilon The accuracy
+ */
+double quasi_newton_mixed_v1(function f, double begin, double end, double x0, double x00, double epsilon);
+
+/*!
+ * Apply quasi Newton's mixed method v2
+ * @param f The function
+ * @param begin the range begin
+ * @param end the range end
+ * @param x0 The start of the iteration
+ * @param epsilon The accuracy
+ */
+double quasi_newton_mixed_v2(function f, double begin, double end, double x0, double x00, double epsilon);
+
 #endif // _METHODS_H__
